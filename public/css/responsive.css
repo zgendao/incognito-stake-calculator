@@ -1,0 +1,158 @@
+@media (max-width: 1500px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (max-width: 992px) {
+  .container {
+    max-width: 780px;
+  }
+  #earnings_chart {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 10px 30px;
+    align-items: center;
+  }
+  #earnings_chart .title {
+    grid-column: 1/4;
+  }
+  #earnings_chart__chartWrapper {
+    grid-column: 1/4;
+  }
+  #rev-chartjs {
+    height: 250px;
+  }
+  
+  #about {
+    flex-direction: column;
+    margin: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    max-width: 540px;
+  }
+  main > .container {
+    grid-template-columns: 1fr;
+    gap: 20px 0;
+  }
+
+  nav .container {
+    position: relative;
+    flex-direction: column;
+    padding: 10px 20px;
+  }
+  nav .navbar__brand {
+    justify-content: left;
+  }
+  nav .collapse {
+    padding: 10px 0;
+    flex-direction: column;
+  }
+  nav a, nav p {
+    padding: 10px 0;
+  }
+
+  nav .navbar__togglr {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    background: none;
+    border: none;
+    outline: none;
+  }
+  nav .navbar__togglr__bars {
+    width: 16px;
+    height: 2px;
+    background-color: #555B68;
+    display: block;
+    border-radius: 10px;
+    transition: all 0.2s;
+    margin-top: 3px;
+  }
+  .u-hideOnMobile {
+    display: none !important;
+  }
+
+  #settings, #earnings_chart, #earnings_more {
+    grid-column: 1;
+    grid-row: unset;
+  }
+
+  #earnings_chart {
+    background: white;
+    gap: 10px 0;
+    padding: 10px 0;
+    position: sticky;
+    bottom: -215px;
+    box-shadow: 0 0 10px var(--border-color);
+    transition: bottom .3s ease-in-out;
+  }
+  #earnings_chart.earnings_chart--showChart {
+    bottom: -10px;
+  }
+  #earnings_chart .title {
+    display: none;
+  }
+  #earnings_chart .dataBlock {
+    text-align: center;
+    grid-row: 1;
+  }
+  #rev-chartjs {
+    height: 200px;
+    margin-top: 10px;
+  }
+
+  .dataBlock p, label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 575px) {
+  body {
+    background: #fafafa;
+  }
+
+  .container {
+    max-width: unset;
+  }
+
+  .card {
+    border: none;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  main > .container {
+    gap: 0;
+    padding: 0;
+  }
+
+  #settings {
+    margin: 20px 0;
+    background: none;
+  }
+
+  #earnings_chart {
+    box-shadow: 0 -10px 10px -10px var(--border-color);
+  }
+
+  #earnings_more {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    box-shadow: 0 10px 10px -10px var(--border-color);
+  }
+  #earnings_more .dataBlock {
+    box-shadow: none;
+  }
+  #earnings_more .dataBlock strong {
+    font-size: 20px;
+  }
+}
