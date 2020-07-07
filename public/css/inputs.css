@@ -139,3 +139,36 @@ input:checked + .slider:before {
   -ms-transform: translateX(17px);
   transform: translateX(17px);
 }
+
+.tooltip {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 9px;
+  height: 12px;
+  width: 12px;
+  line-height: 12px;
+  border-radius: 12px;
+  color: var(--text-light);
+  border: solid 1px var(--text-light);
+  margin-left: 4px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: white;
+  border: solid 1px var(--border-color);
+  color: black;
+  text-align: center;
+  padding: 5px 10px;
+  font-size: 12px;
+  min-width: 110px;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

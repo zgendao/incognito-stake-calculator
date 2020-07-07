@@ -96,12 +96,17 @@
               (/ (actual-issuance past-years) 12)
               (/ (actual-issuance (+ past-years (+ 1 (int (/ (- i rem-months) 12))))) 12))))))
 
-(defn num-input [label value disable max class]
+(defn tooltip [& text]
+  [:span.tooltip "i"
+   [:span.tooltiptext text]])
+
+(defn num-input [label value max class tooltiptext disabled]
   [:div
    [:label {:class class} label
+    (when tooltiptext (tooltip tooltiptext))
     [:input {:type "number"
              :min 0
-             :disabled disable
+             :disabled disabled
              :value (not-nan (if max (min max (@state value)) (@state value)))
              :on-change #(swap! state assoc (keyword value) (not-nan (js/parseInt (min max (-> % .-target .-value)))))}]]])
 
@@ -149,7 +154,6 @@
 
         common-reward 32
         reward-freq (/ (/ 30 (/ (/ (/ (@state :yearly-issuance) (@state :nodes)) 12) common-reward)) validator)
-        _ (println reward-freq)
 
         d-inc-usd (* future-prv-price d-inc)
         y-inc-usd (* future-prv-price y-inc)
@@ -177,6 +181,7 @@
                                   (swap! state assoc :delegate (event-value %)))}]]
         [:div.u-fillLeft_fitRight
          [:label "Stake"
+          (tooltip "Nodes + Pool")
           [:input {:style {:background (str "linear-gradient(to right, black 0%, black " range-percent "%, #fff " range-percent "%, white 100%)")}
                    :type "range"
                    :min 0
@@ -193,15 +198,17 @@
                     :on-change #(do (swap! state assoc :stake (event-value %))
                                     (swap! state assoc :validator (int (/ (event-value %) 1750)))
                                     (swap! state assoc :delegate (rem (event-value %) 1750)))}]]]]
-        [num-input "Staking Time" :time false 120 "showUnit showUnit--months"]
-        [:div>label.switch "Auto restake"
+        [num-input "Staking Time" :time 120 "showUnit showUnit--months" false]
+        [:div>label.switch "Restake"
+         (tooltip "Restake your income monthly")
          [:input#autorestake {:type "checkbox" :checked (@state :restake?) :on-click #(swap! state assoc :restake? (not (@state :restake?)))}]
          [:span.slider]]
         [:h3.title.title--secondary "Advanced"]
-        [num-input "Price Increase" :price-inc false "showUnit showUnit--percentage"]
-        [num-input "Monthly Network Increase" :network-inc false 100 "showUnit showUnit--percentage"]
-        [num-input "Empty Physical Nodes (33%)" :pnodes true "showUnit showUnit--piece"]
-        [num-input "Network Stake" :network-stake false "showUnit showUnit--prv"]]]
+        [num-input "Price Increase" :price-inc nil "showUnit showUnit--percentage" "Applies to the whole term" false]
+        [num-input "Monthly Network Increase" :network-inc 100 "showUnit showUnit--percentage" false]
+        [num-input "Funded physical nodes" :pnodes nil "showUnit showUnit--piece" "35% of the whole reward" "disabled"]
+        [num-input "Network Stake" :network-stake nil "showUnit showUnit--prv" "Staked PRV by active nodes" false]]
+       [:p.disclaimer [:strong "Disclaimer: "] "This calculator only estimates. Node earnings rate is random and inconsistent."]]
       [:div#earnings_chart.card {:class [(when (@state :chart-open) "earnings_chart--showChart")]}
        [:h2.title "Earnings"]
        [:div#earnings_chart__chartWrapper
@@ -210,15 +217,18 @@
           [:div#rev-chartjs.flex
            [:div.loader]])]
        [:div.dataBlock {:on-click #(swap! state assoc :chart-open (not (@state :chart-open)))}
-        [:p "Daily Income"]
+        [:p "Daily Income"
+         (tooltip "AVG of the whole term")]
         [:strong "$" (vformat d-inc-usd)]
         [:p (vformat d-inc) " PRV"]]
        [:div.dataBlock {:on-click #(swap! state assoc :chart-open (not (@state :chart-open)))}
-        [:p "Monthly Income"]
+        [:p "Monthly Income"
+         (tooltip "AVG of the whole term")]
         [:strong "$" (vformat m-inc-usd)]
         [:p (vformat m-inc) " PRV"]]
        [:div.dataBlock {:on-click #(swap! state assoc :chart-open (not (@state :chart-open)))}
-        [:p "Yearly Income"]
+        [:p "Yearly Income"
+         (tooltip "AVG of the whole term")]
         [:strong "$" (vformat y-inc-usd)]
         [:p (vformat y-inc) " PRV"]]]
       [:div#earnings_more.card
@@ -229,7 +239,8 @@
         [:p "Yearly Reward Rate"]
         [:strong (pformat (not-inf y-rate)) "%"]]
        [:div.dataBlock
-        [:p "Network Share"]
+        [:p "Network Share"
+         (tooltip "Your holding share" [:br] "in the network currently")]
         [:strong (format "%.4f" (* 100 network-share)) "%"]]
        [:div.dataBlock
         [:p "Current Holdings"]

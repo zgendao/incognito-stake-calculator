@@ -143,7 +143,6 @@ main > .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  overflow: hidden;
 }
 #earnings_more .dataBlock {
   text-align: center;
@@ -213,4 +212,10 @@ main > .container {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.disclaimer {
+  color: var(--text-light);
+  font-size: 14px;
+  padding-top: 10px;
 }
