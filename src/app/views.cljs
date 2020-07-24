@@ -13,7 +13,7 @@
                   :pnodes 0
                   :restake? false
                   :time 6
-                  :yearly-issuance (* 0.25 8751970)
+                  :yearly-issuance (* 0.2 8751970)
                   :network-stake 0
                   :network-inc 1
                   :price-inc 0
