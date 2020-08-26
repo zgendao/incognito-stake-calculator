@@ -32,8 +32,8 @@
         (swap! state assoc :prv-price price))))
 
 (defn nodes-request []
-  (go (let [response (<! (http/post "https://mainnet.incognito.org/fullnode" {:json-params {:jsonrpc "1.0" :method "getbeaconbeststatedetail" :id (uuid/v4)} :with-credentials? false :headers {"Content-Type" "application/json"}}))
-            nodes (count (:RewardReceiver (:Result (:body response))))]
+  (go (let [response (<! (http/post "https://fullnode.incognito.org/" {:json-params {:jsonrpc "1.0" :method "getbeaconbeststatedetail" :id (uuid/v4)} :with-credentials? false :headers {"Content-Type" "application/json"}}))
+            nodes (count (:AutoStaking (:Result (:body response))))]
         (do
           (swap! state assoc :nodes nodes)
           (swap! state assoc :network-stake (* 1750 nodes))
