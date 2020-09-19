@@ -42,7 +42,7 @@
 (defn holding-vector [issuance-vector network-stake holding]
   (let [network-inc (- 1 (/ (@state :network-inc) 100))
         pool-share (/ (@state :delegate) network-stake)
-        pool-reward (* (@state :delegate) (/ 0.37 12))]
+        pool-reward (* (@state :delegate) (/ 0.28 12))]
     (if (@state :restake?)
       (reduce #(conj %1 (int (+ (last %1) (+ pool-reward (* %2 (* network-inc (- (/ (last %1) network-stake) pool-share)))))))
               [holding]
@@ -118,6 +118,7 @@
       [:img {:src "./images/logo.png" :width "25px"}]
       [:p "Incognito Calculator"]]]
     [:div.collapse {:class [(when (not (@state :navbar-open)) "u-hideOnMobile")]}
+     [:a {:href "https://prv.finance"  :target "_blank"} "WALLET"]
      [:a {:href "https://incognito.org/t/node/338"  :target "_blank"} "NODE"]
      [:a {:href "https://incognito.org/t/prv-holders/792"  :target "_blank"} "PRV"]
      [:p (format "%.3f" (@state :prv-price)) " USD"]]
@@ -152,7 +153,7 @@
         reward-value (+ (* m-inc time) pnode-reward)
         reward-rate (/ reward-value holding)
 
-        common-reward 32
+        common-reward 20
         reward-freq (/ (/ 30 (/ (/ (/ (@state :yearly-issuance) (@state :nodes)) 12) common-reward)) validator)
 
         d-inc-usd (* future-prv-price d-inc)
