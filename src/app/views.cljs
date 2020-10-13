@@ -44,10 +44,10 @@
         pool-share (/ (@state :delegate) network-stake)
         pool-reward (* (@state :delegate) (/ 0.28 12))]
     (if (@state :restake?)
-      (reduce #(conj %1 (int (+ (last %1) (+ pool-reward (* %2 (* network-inc (- (/ (last %1) network-stake) pool-share)))))))
+      (reduce #(conj %1 (float (+ (last %1) (+ pool-reward (* %2 (* network-inc (- (/ (last %1) network-stake) pool-share)))))))
               [holding]
               issuance-vector)
-      (reduce #(conj %1 (int (+ (last %1) (+ pool-reward (* %2 (* network-inc (- (/ (first %1) network-stake) pool-share)))))))
+      (reduce #(conj %1 (float (+ (last %1) (+ pool-reward (* %2 (* network-inc (- (/ (first %1) network-stake) pool-share)))))))
               [holding]
               issuance-vector))))
 
