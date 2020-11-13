@@ -118,9 +118,10 @@
       [:img {:src "./images/logo.png" :width "25px"}]
       [:p "Incognito Calculator"]]]
     [:div.collapse {:class [(when (not (@state :navbar-open)) "u-hideOnMobile")]}
+     [:a {:href "https://incognito.org/quest"  :target "_blank"} "PRIVACY QUEST"]
      [:a {:href "https://prv.finance"  :target "_blank"} "WALLET"]
      [:a {:href "https://incognito.org/t/node/338"  :target "_blank"} "NODE"]
-     [:a {:href "https://incognito.org/t/prv-holders/792"  :target "_blank"} "PRV"]
+     ;[:a {:href "https://incognito.org/t/prv-holders/792"  :target "_blank"} "PRV"]
      [:p (format "%.3f" (@state :prv-price)) " USD"]]
     [:button.navbar__togglr {:on-click #(swap! state assoc :navbar-open (not (@state :navbar-open)))}
      [:span.navbar__togglr__bars]
